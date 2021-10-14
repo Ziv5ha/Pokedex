@@ -9,24 +9,25 @@
 </head>
 <body>
     <!-- <div id="background"><img src="./styles/images/pokedex-background.png" alt=""></div> -->
-    <input type="text" placeholder="Pokemon name or ID">
-    <button>Seatch</button>
+    <input id="search-box" type="text" placeholder="Pokemon name or ID">
+    <button id="search-button">Seatch</button>
 
     <section>
-        <img src="" alt="">
+        <img id="pokemon-render" src="" alt="">
         <p id="entry-head">
-            <span id="pokemon-id">id</span>
-            <span id="pokemon-name">name</span>
+            <span id="pokemon-id"></span>
+            <span id="pokemon-name"></span>
         </p>
         <dl>
-            <span id="pokemon-species">species</span>
-            <dt id="pokemon-type"> type</dt>
-            <dt id="pokemon-height"> height</dt>
-            <dt id="pokemon-weight"> weight</dt>
-            <dt id="pokemon-family-tree"> family tree</dt>
-            <span id="pokemon-description">description</span> 
+            <span id="pokemon-species"></span>
+            <dt id="pokemon-type"></dt>
+            <dt id="pokemon-height">height</dt>
+            <dt id="pokemon-weight">weight</dt>
+            <dt id="pokemon-speciality">speciality</dt>
+            <span id="pokemon-family-tree">description</span> 
         </dl>
     </section>
+    <div id="black-block"></div>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./src/index.js"></script>
