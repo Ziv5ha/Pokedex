@@ -13,20 +13,30 @@ const familyTreeElem = document.getElementById("pokemon-family-tree")
 const descriptionElem = document.getElementById("pokemon-description")
 
 async function getPokemon(pokemonId){
-    const pokemonPromise = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`)
-    return pokemonPromise.data
+    try{
+        const pokemonPromise = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`)
+        return pokemonPromise.data
+    } catch (error){
+        throw error
+        // throw new Error `can't find Pokemon`
+    }
+    
 }
 async function displayPokemon(pokemonId){
-    deleteTypes()
-    const pokemonData = await getPokemon(pokemonId)
-    idElem.innerText = pokemonData.id
-    nameElem.innerText = pokemonData.name
-    renderElem.src = `https://img.pokemondb.net/sprites/home/normal/${pokemonData.name}.png`
-    speciesElem.innerText = pokemonData.species.name
-    displayTypes(pokemonData.types)
-    heightElem.innerText = pokemonData.height
-    weightElem.innerText = pokemonData.weight
-    console.log(pokemonData)
+    try{
+        deleteTypes()
+        const pokemonData = await getPokemon(pokemonId)
+        idElem.innerText = pokemonData.id
+        nameElem.innerText = pokemonData.name
+        renderElem.src = `https://img.pokemondb.net/sprites/home/normal/${pokemonData.name}.png`
+        speciesElem.innerText = pokemonData.species.name
+        displayTypes(pokemonData.types)
+        heightElem.innerText = pokemonData.height
+        weightElem.innerText = pokemonData.weight
+        console.log(pokemonData)
+    } catch {
+        
+    }
 }
 //pokemons can have multible types. this function handles those types
 function displayTypes(types){
@@ -43,4 +53,7 @@ function deleteTypes(){
     if (prevTypes.length>0) typeElem.innerHTML = ""
 }
 displayPokemon(280)
-
+function searchPokemon(){
+    displayPokemon(searchBox.value)
+}
+searchButton.addEventListener("click", searchPokemon)
