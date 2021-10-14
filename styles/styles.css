@@ -1,0 +1,6 @@
+body{
+    background: url("./images/pokedex-background.png");
+    background-size: 95%;
+    background-repeat: no-repeat;
+    background-position:center top;
+}
