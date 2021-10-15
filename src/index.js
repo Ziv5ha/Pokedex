@@ -11,7 +11,7 @@ const typeElem = document.getElementById("pokemon-type")
 const heightElem = document.getElementById("pokemon-height")
 const weightElem = document.getElementById("pokemon-weight")
 const specialtyElem = document.getElementById("pokemon-specialty")
-const familyTreeElem = document.getElementById("pokemon-family-tree")
+const descriptionElem = document.getElementById("pokemon-description")
 
 async function getPokemon(pokemonId){
     try{
@@ -21,8 +21,35 @@ async function getPokemon(pokemonId){
         handleError()
         throw error
     }
+}
+// // Get description chain from pokemon species url!
+async function getPokemonSpecies(speciesURL){
+    try{
+        const pokemonSpeciesPromise = await fetch(`${speciesURL}`)
+        const pokemonSpecies = await pokemonSpeciesPromise.json()
+        return pokemonSpecies
+    } catch (error){
+        throw `can't find Species. ${error}`
+    }
+}
+
+// async function getPokemonEvolutionChain(evolutionURL){
+//     try{
+//         const evolutionPromise = await fetch(`${evolutionURL}`)
+//         const evolutionchain = evolutionPromise.json()
+//         return evolutionchain
+//     } catch (error){
+//         throw `can't find evolution chain. ${error}`
+//     }
+// }
+
+async function displayDescription(spiciesURL){
+    const pokemonSpecies = await getPokemonSpecies(spiciesURL)
+    descriptionElem.innerText = pokemonSpecies.flavor_text_entries[0].flavor_text
+
     
 }
+
 async function displayPokemon(pokemonId){
     try{
         removeError()
@@ -37,6 +64,7 @@ async function displayPokemon(pokemonId){
         heightElem.innerText = pokemonData.height
         weightElem.innerText = pokemonData.weight
         specialtyElem.innerText = calculateSpecialty(pokemonData.stats)
+        displayDescription(pokemonData.species.url)
         console.log(pokemonData)
     } catch (error){
         throw `can't find Pokemon. ${error}`
