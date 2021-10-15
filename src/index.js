@@ -45,7 +45,7 @@ async function getPokemonSpecies(speciesURL){
 
 async function displayDescription(spiciesURL){
     const pokemonSpecies = await getPokemonSpecies(spiciesURL)
-    descriptionElem.innerText = pokemonSpecies.flavor_text_entries[0].flavor_text
+    descriptionElem.innerText = pokemonSpecies.flavor_text_entries[1].flavor_text.replace('\f', " ").replaceAll('\n', " ")
 
     
 }
@@ -59,7 +59,7 @@ async function displayPokemon(pokemonId){
         idElem.innerText = pokemonData.id
         nameElem.innerText = pokemonData.name
         renderElem.src = `https://img.pokemondb.net/sprites/home/normal/${pokemonData.name}.png`
-        speciesElem.innerText = pokemonData.species.name
+        // speciesElem.innerText = pokemonData.species.name
         displayTypes(pokemonData.types)
         heightElem.innerText = pokemonData.height
         weightElem.innerText = pokemonData.weight
@@ -73,9 +73,9 @@ async function displayPokemon(pokemonId){
 //pokemons can have multible types. this function handles those types
 function displayTypes(types){
     for (const type of types){
-        const typeSpan = document.createElement("span")
-        typeSpan.innerText = type.type.name
-        typeSpan.classList.add("type-box", `${type.type.name}`)
+        const typeSpan = document.createElement("img")
+        typeSpan.src = `../styles/images/types/${type.type.name}.png`
+        typeSpan.classList.add("type-box")
         typeElem.appendChild(typeSpan)
     }
 }
@@ -116,7 +116,7 @@ function calculateSpecialty(statsObj){
     const statsArr = [sipmleStatsObj.HP, sipmleStatsObj.ATK, sipmleStatsObj.DEF, sipmleStatsObj.SPATK, sipmleStatsObj.SPDEF]
     const highestStat = Math.max(...statsArr)
     for (const [statName, statValue] of Object.entries(sipmleStatsObj)){
-        if (statValue === highestStat) return `The Pokemon's highest stat is ${statName}: ${statValue}`
+        if (statValue === highestStat) return `${statName}: ${statValue}`
     }
 }
 

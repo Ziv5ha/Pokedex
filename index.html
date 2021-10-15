@@ -8,32 +8,36 @@
     <title>Pokedex</title>
 </head>
 <body>
-    <!-- <div id="background"><img src="./styles/images/pokedex-background.png" alt=""></div> -->
-    <input id="search-box" type="text" placeholder="Pokemon name or ID">
-    <button id="search-button">Seatch</button>
+    <main id="pokedex">
+        <section id="search">
+            <input id="search-box" type="text" placeholder="Pokemon name or ID">
+            <button id="search-button">Seatch</button>
+        </section>
 
-    <section id="pokedex-entry">
-        <div id="entry-left">
-            <img id="pokemon-render" src="" alt="">
-        </div>
-        <div id="entry-right">
-            <p id="entry-head">
-                <img id="pokemon-sprite" src="" alt="">
-                <span id="pokemon-id"></span>
-                <span id="pokemon-name"></span>
-            </p>
-            <dl>
-                <span id="pokemon-species"></span>
-                <dt id="pokemon-type"></dt>
-                <dt id="pokemon-height">height</dt>
-                <dt id="pokemon-weight">weight</dt>
-                <dt id="pokemon-specialty">specialty</dt>
-                <span id="pokemon-description">description</span> 
-            </dl>
-        </div>
-    </section>
-    <div id="black-block"></div>
-
+        <section id="pokedex-entry">
+            <div id="entry-left">
+                <img id="pokemon-render" src="" alt="">
+            </div>
+            <div id="entry-right">
+                <p id="entry-head">
+                    <img id="pokemon-sprite" src="" alt="">
+                    <span id="pokemon-id"></span>
+                    <span id="pokemon-name"></span>
+                </p>
+                <p id="pokemon-species"></p>
+                <table>
+                    <tbody>
+                        <tr><td></td><td id="pokemon-type"></td></tr> 
+                        <tr><td></td><td id="pokemon-height">height</td></tr>
+                        <tr><td></td><td id="pokemon-weight">weight</td></tr>
+                        <tr><td><span id="specialty-tile">Highest stat</span></td><td id="pokemon-specialty">specialty</td></tr>
+                    </tbody>
+                </table>
+                <p id="pokemon-description">description</p>
+            </div>
+        </section>
+        <div id="black-block"></div>
+    </main>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./src/index.js"></script>
 </body>
