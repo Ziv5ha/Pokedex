@@ -90,7 +90,7 @@ function displayTypes(types){
 // type select functionality
 function createTypeImg(type, typeCount){
     const typeIcon = document.createElement("img")
-    typeIcon.src = `../styles/images/types/${type.type.name}.png`
+    typeIcon.src = `/Pokedex/styles/images/types/${type.type.name}.png`
     typeIcon.classList.add("type-box", `type-icon${typeCount}`)
     typeIcon.addEventListener("click", showTypeSelect)
     typeElem.appendChild(typeIcon)
