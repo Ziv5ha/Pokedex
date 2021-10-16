@@ -1,5 +1,6 @@
 body{
     margin: 0;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 main{
     width: 100vw;
@@ -14,10 +15,39 @@ main{
 /* Search bar */
 #search{
     position: relative;
+    display: flex;
     width: 50%;
     height: 9.5%;
     padding: 1% 0 0 25%;
 }
+#search-box{
+    height: 90%;
+    width: 50%;
+    margin: -0.2% 0 0 0;
+    padding: 0 0 0 4%;
+    /* background: linear-gradient(295deg, rgba(0,0,0,1) 9%, rgb(255, 76, 15) 10%); */
+    background: linear-gradient(295deg, rgba(0,0,0,1) 2.6%, rgb(255, 76, 15) 2.75%);
+    border: none;
+    font-size: 90%;
+}
+#search-box :focus{
+    outline: none;
+}
+#search-button{
+    height: 90%;
+
+    width: 20%;
+    /* background-color: black; */
+    background: linear-gradient(295deg, rgba(0,0,0,1) 87.4%, rgba(255,76,15) 88.3%);
+    margin: -0.2% 0 0 0;
+    cursor: pointer;
+    border: none;
+    color: white;
+    font-size: 90%;
+
+
+}
+
 /* Entry */
 #pokedex-entry{
     display: flex;
@@ -34,7 +64,7 @@ main{
 }
 #pokemon-render{
     margin: 50% 0 0 0;
-    width: 100%;
+    width: 80%;
 }
 /* Right */
 #entry-right{
@@ -52,6 +82,7 @@ main{
     align-items: center;
     color: white;
     margin: -0.7% 0 0 0;
+    height: 13%;
 }
 #pokemon-sprite{
     position:relative;
@@ -104,4 +135,10 @@ tbody td{
     width: 100%;
     padding: 1.5%;
     font-size: 80%;
+}
+#black-block{
+    width: 56%;
+    height: 4%;
+    margin: -3% 0 0 41%;
+    background-color: black;
 }
