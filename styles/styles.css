@@ -25,10 +25,11 @@ main{
     width: 50%;
     margin: -0.2% 0 0 0;
     padding: 0 0 0 4%;
-    /* background: linear-gradient(295deg, rgba(0,0,0,1) 9%, rgb(255, 76, 15) 10%); */
     background: linear-gradient(295deg, rgba(0,0,0,1) 2.6%, rgb(255, 76, 15) 2.75%);
     border: none;
     font-size: 90%;
+    outline: none;
+
 }
 #search-box :focus{
     outline: none;
@@ -37,7 +38,6 @@ main{
     height: 90%;
 
     width: 20%;
-    /* background-color: black; */
     background: linear-gradient(295deg, rgba(0,0,0,1) 87.4%, rgba(255,76,15) 88.3%);
     margin: -0.2% 0 0 0;
     cursor: pointer;
@@ -119,6 +119,26 @@ tbody td{
 .type-box{
     width: 30%;
     margin: 0 5% 0 5%;
+    cursor: pointer;
+}
+.type-select{
+    position: absolute;
+    width: 7vw;
+    height: calc((9/16)*7vw);
+    border: none;
+    /* background-color: rgba(232,94,58,1); */
+    visibility: hidden;
+}
+.visible{
+    visibility: visible;
+}
+.type1{
+    left: 70.5vw;
+    top: calc((9/16)*33.5vw);
+}
+.type2{
+    left: 79.5vw;
+    top: calc((9/16)*33.5vw);
 }
 #specialty-tile{
     font-size: 90%;
@@ -141,4 +161,18 @@ tbody td{
     height: 4%;
     margin: -3% 0 0 41%;
     background-color: black;
+}
+
+/* error */
+#error{
+    position: absolute;
+    width: 50%;
+    height: 40%;
+    top: 30%;
+    left: 25%;
+    background: linear-gradient(285deg, rgba(72,72,72,1) 5%, rgba(241,58,23,1) 6%, rgba(232,94,58,1) 94%, rgba(72,72,72,1) 95%);
+    opacity: 0.8;
+    text-align: center;
+    font-size: 5vw;
+    border-radius: 10%;
 }

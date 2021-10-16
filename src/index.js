@@ -32,6 +32,15 @@ async function getPokemonSpecies(speciesURL){
         throw `can't find Species. ${error}`
     }
 }
+async function getAllPokemonOfType(typeURL){
+    try{
+        const typePromise = await fetch(`${typeURL}`)
+        const typeObj = await typePromise.json()
+        return typeObj.pokemon
+    } catch (error){
+        throw `can't find Type. ${error}`
+    }
+}
 
 // async function getPokemonEvolutionChain(evolutionURL){
 //     try{
@@ -43,19 +52,12 @@ async function getPokemonSpecies(speciesURL){
 //     }
 // }
 
-async function displayDescription(spiciesURL){
-    const pokemonSpecies = await getPokemonSpecies(spiciesURL)
-    descriptionElem.innerText = pokemonSpecies.flavor_text_entries[1].flavor_text.replace('\f', " ").replaceAll('\n', " ")
-
-    
-}
 
 async function displayPokemon(pokemonId){
     try{
-        removeError()
-        deleteTypes()
         const pokemonData = await getPokemon(pokemonId)
         spriteElem.src = pokemonData.sprites.front_default
+        backSprite(pokemonData.sprites.front_default, pokemonData.sprites.back_default)
         idElem.innerText = pokemonData.id
         nameElem.innerText = pokemonData.name
         renderElem.src = `https://img.pokemondb.net/sprites/home/normal/${pokemonData.name}.png`
@@ -65,30 +67,76 @@ async function displayPokemon(pokemonId){
         weightElem.innerText = pokemonData.weight
         specialtyElem.innerText = calculateSpecialty(pokemonData.stats)
         displayDescription(pokemonData.species.url)
-        console.log(pokemonData)
+        // console.log(pokemonData)
     } catch (error){
         throw `can't find Pokemon. ${error}`
     }
 }
+
+async function displayDescription(spiciesURL){
+    const pokemonSpecies = await getPokemonSpecies(spiciesURL)
+    const description = identifyEnglishDescription(pokemonSpecies.flavor_text_entries)
+    descriptionElem.innerText = description.replace('\f', " ").replaceAll('\n', " ")
+}
 //pokemons can have multible types. this function handles those types
 function displayTypes(types){
+    let typeCount = 1
     for (const type of types){
-        const typeSpan = document.createElement("img")
-        typeSpan.src = `../styles/images/types/${type.type.name}.png`
-        typeSpan.classList.add("type-box")
-        typeElem.appendChild(typeSpan)
+        createTypeImg(type, typeCount)
+        createTypeSelect(type.type.url, typeCount)
+        typeCount++
     }
 }
-// Reset types before the next search
-function deleteTypes(){
-    const prevTypes = document.getElementsByClassName("type-box")
-    if (prevTypes.length>0) typeElem.innerHTML = ""
+// type select functionality
+function createTypeImg(type, typeCount){
+    const typeIcon = document.createElement("img")
+    typeIcon.src = `../styles/images/types/${type.type.name}.png`
+    typeIcon.classList.add("type-box", `type-icon${typeCount}`)
+    typeIcon.addEventListener("click", showTypeSelect)
+    typeElem.appendChild(typeIcon)
+}
+async function createTypeSelect(typeURL, typeCount){
+    const pokemonsArr = await getAllPokemonOfType(typeURL)
+    const pokemonSelect = document.createElement("select")
+    pokemonSelect.classList.add(`type-select`, `type${typeCount}`)
+    for (const pokemon of pokemonsArr) {
+        const pokemonOption = document.createElement("option")
+        pokemonOption. innerText = pokemon.pokemon.name
+        pokemonOption. value = pokemon.pokemon.name
+        pokemonSelect.appendChild(pokemonOption)
+    }
+    pokemonSelect.addEventListener("change", ({target})=>{searchPokemon(target.value)})
+    document.getElementById("pokedex").appendChild(pokemonSelect)
 }
 // displayPokemon(280)
-function searchPokemon(){
-    displayPokemon(searchBox.value)
+function searchPokemon(pokemonId){
+    removeError()
+    clearDisplay()
+    displayPokemon(pokemonId)
 }
-searchButton.addEventListener("click", searchPokemon)
+// Reset entry display
+function clearDisplay(){
+    spriteElem.src = ""
+    idElem.innerText = ""
+    nameElem.innerText = ""
+    renderElem.src = ""
+    // speciesElem.innerText = ""
+    deleteTypes()
+    heightElem.innerText = ""
+    weightElem.innerText = ""
+    specialtyElem.innerText = ""
+    descriptionElem.innerText = ""
+}
+function deleteTypes(){
+    const prevTypesImg = document.getElementsByClassName("type-box")
+    if (prevTypesImg.length>0) typeElem.innerHTML = ""
+    const prevTypesSelect = document.getElementsByClassName("type-select")
+    if (prevTypesSelect.length>0){
+        prevTypesSelect[0].remove()
+        deleteTypes()
+    }
+}
+searchButton.addEventListener("click", ()=>{searchPokemon(searchBox.value)})
 
 // Error handles
 function handleError(){
@@ -120,4 +168,28 @@ function calculateSpecialty(statsObj){
     }
 }
 
-displayPokemon(280)
+// spripte back_defult function
+function backSprite(front, back){
+    spriteElem.onmouseover = () => {spriteElem.src = back}
+    spriteElem.onmouseout = () => {spriteElem.src = front}
+}
+// // get same type pokemon list function
+function identifyTypeList(className){
+    if (className === "type-icon1") return document.getElementsByClassName("type1")[0]
+    if (className === "type-icon2") return document.getElementsByClassName("type2")[0]
+}
+function showTypeSelect({target}){
+    const typeSelect = identifyTypeList(target.classList[1])
+    typeSelect.classList.add("visible")
+}
+// // Check for english description
+function identifyEnglishDescription(descriptionArr){
+    for (const description of descriptionArr) {
+        if (description.language.name === "en") return description.flavor_text
+    }
+}
+// // If I have time do sothing about pokemon gender
+
+
+
+// displayPokemon(280)
